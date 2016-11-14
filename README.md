@@ -1,6 +1,6 @@
 # RESTful Web Services
 by
-Dimitri ESCALLE && Julien DA COSTA VAZ
+Dimitri ESCALLE and Julien DA COSTA VAZ
 
-### description
+### Description
 This project is to develop a REST web service
