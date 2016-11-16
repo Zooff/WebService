@@ -5,8 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-//Database
-
+//Database à refaire
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, "Connection Error"));
+db.on('open', function(){
+  console.log("Connexion Réussi")}
+);
 
 var index = require('./routes/index');
 var users = require('./routes/users');

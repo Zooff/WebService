@@ -1,9 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var dao = require('../data/usersDao.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('J\'avais raison');
+  dao.FindAll(function(users,err){
+    if(err){
+      res.status(err.status).send(err.message);
+    }
+    else {
+      res.status(200).json(users);
+    }
+  })
+
 });
 
 router.post('/signup', function(req, res){
