@@ -19,20 +19,21 @@ db.once('open', function() {
   var Users = mongoose.model('Users', usersSchema);
 
   var zooff = new Users({ email : 'zooff@gmail.com', firstname : 'zooff', lastname : 'moonblade', biography : 'Just a little test'});
-  console.log(zooff);
+  //console.log(zooff);
+
+  var julio42 = new Users({email : 'julio42@gamil.com', firstname : 'julio', lastname : 'sunblade', biography : 'I add you man'});
 
   zooff.save(function(err,zooff){
     if (err) return console.log(err);
     console.log(zooff);
   });
 
+  julio42.save();
+
   Users.find(function(err, users) {
     if (err) return console.log(err);
+    console.log("FIND");
     console.log(users);
   });
 
-});
-
-db.close(function () {
-  console.log("Connection close");
 });
