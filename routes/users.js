@@ -43,6 +43,14 @@ router.put('/:userId', function(req, res){
 });
 
 router.delete('/:userId', function(req,res){
+  dao.removeUser(req.params.userId, function(err){
+    if (err){
+      res.status(err.status).send(err.message);
+    }
+    else {
+      res.status(200).send("The user has been killed");
+    }
+  })
 
 });
 
