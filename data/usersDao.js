@@ -16,7 +16,7 @@ exports.FindAll = function(callback){
 }
 
 exports.findById = function(id,callback){
-  Users.findOne({firstname : id}, function(err, user){
+  Users.findOne({_id : id}, function(err, user){
     if (err){
       return callback(null, {status : 500, message : 'Error : ' + err});
     }

@@ -13,6 +13,8 @@ db.on('error', console.error.bind(console, "Connection Error"));
 db.on('open', function(){
   console.log("Connexion Réussi")}
 );
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(db);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
