@@ -15,19 +15,48 @@ exports.FindAll = function(callback){
   });
 }
 
-exports.findById = function(id,julien){
-  Users.findOne({firstname : id}, function(err, user){
+exports.findById = function(id,callback){
+  Users.findOne({_id : id}, function(err, user){
     if (err){
-      return julien(null, {status : 500, message : 'Error' + err});
+      return callback(null, {status : 500, message : 'Error : ' + err});
     }
     if (user){
-      return julien(user, null);
+      return callback(user, null);
     }
-    return julien(null, {status : 404, message : 'Are you sure this user exist ?'});
+    return callback(null, {status : 404, message : 'Are you sure this user exist ?'});
   });
 }
 
-// 
-// exports.addUser();
+exports.addUser = function(newUser, callback){
+  Users.findOne({email : newUser.email}, function(err,user){
+    if (err){
+      return callback(null, {status : 500, message : 'Error : ' + err});
+    }
+    if (user){
+      return callback(null, {status : 409, message : 'This User already exist'});
+    }
+    var uservar = new Users({ email : newUser.email, firstname : newUser.firstname, lastname : newUser.lastname, biography : newUser.biography, registration : new Date().toJSON()});
+    return uservar.save(function (err, creUser){
+      if (err){
+        return callback(null, {status : 500, message : 'Error : ' + err});
+      }
+      if (creUser){
+        return callback(creUser, null);
+      }
+    });
+  });
+}
 //
 // exports.update();
+
+exports.removeUser = function(id, callback){
+  Users.findOneAndRemove({_id : id}, function(err, user){
+    if (err){
+      return callback({status : 500, message : 'Error : ' + err});
+    }
+    if (user){
+      return callback(null);
+    }
+    return callback(null, {status : 404, message : 'Are you sure this user exist ?'});
+  })
+}

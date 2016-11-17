@@ -16,11 +16,19 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res){
-  res.send("something");
+  var newUser = req.body;
+  dao.addUser(newUser, function(user, err){
+    if (err){
+      res.status(err.status).send(err.message);
+    }
+    else {
+      res.status(200).send("Welcome to our Social network");
+    }
+  })
 });
 
 router.get('/:userId', function(req,res){
-  dao.findById(req.param('userId'), function(user, err){
+  dao.findById(req.params.userId, function(user, err){
     if(err){
       res.status(err.status).send(err.message);
     }
@@ -35,6 +43,14 @@ router.put('/:userId', function(req, res){
 });
 
 router.delete('/:userId', function(req,res){
+  dao.removeUser(req.params.userId, function(err){
+    if (err){
+      res.status(err.status).send(err.message);
+    }
+    else {
+      res.status(200).send("The user has been killed");
+    }
+  })
 
 });
 
