@@ -1,0 +1,38 @@
+var express = require('express');
+var router = express.Router();
+var dao = require('../data/groupsDao.js');
+
+router.get('/', function(req, res, next){
+	dao.getAll(function(groups, err){
+		if(err){
+     	 	res.status(err.status).send(err.message);
+    	}
+    	else {
+      		res.status(200).json(groups);
+    	}
+	})
+});
+
+router.get('/:groupId', function(req, res, next){
+	dao.get(req.params.groupId, function(group, err){
+		if(err){
+     	 	res.status(err.status).send(err.message);
+    	}
+    	else {
+      		res.status(200).json(group);
+      	}
+	})
+});
+
+router.delete('/:groupId', function(req, res){
+	dao.delete(req.params.groupId, function(err){
+		if(err){
+     	 	res.status(err.status).send(err.message);
+    	}
+    	else {
+      		res.status(200);
+      	}
+	})
+});
+
+module.exports = router;
