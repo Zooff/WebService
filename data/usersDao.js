@@ -14,3 +14,20 @@ exports.FindAll = function(callback){
     return callback(null,{status : 404, message : 'No User has ever signup'});
   });
 }
+
+exports.findById = function(id,julien){
+  Users.find({firstname : id}, function(err, user){
+    if (err){
+      return julien(null, {status : 500, message : 'Error' + err});
+    }
+    if (user){
+      return julien(user, null);
+    }
+    return julien(null, {status : 404, message : 'Are you sure this user exist ?'});
+  });
+}
+
+// 
+// exports.addUser();
+//
+// exports.update();

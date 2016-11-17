@@ -20,8 +20,15 @@ router.post('/signup', function(req, res){
 });
 
 router.get('/:userId', function(req,res){
-  res.send(req.param('userId'));
-})
+  dao.findById(req.param('userId'), function(user, err){
+    if(err){
+      res.status(err.status).send(err.message);
+    }
+    else {
+      res.status(200).json(user);
+    }
+  })
+});
 
 router.put('/:userId', function(req, res){
 
