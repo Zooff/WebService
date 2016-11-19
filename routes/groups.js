@@ -10,7 +10,7 @@ router.get('/', function(req, res, next){
     	else {
       		res.status(200).json(groups);
     	}
-	})
+	});
 });
 
 router.get('/:groupId', function(req, res, next){
@@ -21,7 +21,7 @@ router.get('/:groupId', function(req, res, next){
     	else {
       		res.status(200).json(group);
       	}
-	})
+	});
 });
 
 router.delete('/:groupId', function(req, res){
@@ -32,7 +32,19 @@ router.delete('/:groupId', function(req, res){
     	else {
       		res.status(200);
       	}
-	})
+	});
+});
+
+router.create('/createGroup', function(req, res){
+    var newGroup = req.body
+    dao.create(newGroup, function(group, err){
+        if(err){
+            res.status(err.status).send(err.message);
+        }
+        else {
+            res.status(200).send("New group created");
+        }
+    });
 });
 
 module.exports = router;
