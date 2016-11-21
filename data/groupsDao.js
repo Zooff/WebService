@@ -54,3 +54,21 @@ exports.updateDesc = function(id, callback){
 		}
 	});
 }
+
+exports.joinGroup = function(idUser, idGroup, callback){
+	Groups.findOne({_id : idGroup}, function(err, group){
+		if(err){
+			return callback(null, {status : 500, message : 'Error ' + err});
+		}
+		if(group){
+			group.members.push(idUser);
+			return group.save(function(err, groupModif){
+				if(err){
+					return callback(null, {status : 500, message : 'Error ' + err});
+				} else {
+					return callback(groupModif, null);
+				}
+			});
+		}
+	});
+}

@@ -43,13 +43,23 @@ router.post('/createGroup', function(req, res){
     });
 });
 
-router.post('/:groupId'; function(req, res){
+router.put('/:groupId'; function(req, res){
     var newDesc = req.body.description;
     dao.updateDesc(newDesc, function(group, err){
         if(err){
             res.status(err.status).send(err.message);
         } else {
             res.status(200).send("The description of this group has been changed");
+        }
+    });
+});
+
+router.put('/join/:groupId/:userId'; function(req, res){
+    dao.joinGroup(req.params.groupId, req.params.userId, function(group, err){
+        if(err){
+            res.status(err.status).send(err.message);
+        } else {
+            res.status(200).send("The user has been added in the group");
         }
     });
 });
