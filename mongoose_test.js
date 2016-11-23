@@ -8,6 +8,9 @@ mongoose.connect('mongodb://localhost/test');
 
 
 var db = mongoose.connection;
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(db);
+
 db.on('error', console.error.bind(console, "Connection Error"));
 db.once('open', function() {
 
