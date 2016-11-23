@@ -43,7 +43,7 @@ router.post('/createGroup', function(req, res){
     });
 });
 
-router.put('/:groupId'; function(req, res){
+router.put('/:groupId', function(req, res){
     var newDesc = req.body.description;
     dao.updateDesc(newDesc, function(group, err){
         if(err){
@@ -54,7 +54,7 @@ router.put('/:groupId'; function(req, res){
     });
 });
 
-router.put('/join/:groupId/:userId'; function(req, res){
+router.put('/join/:groupId/:userId', function(req, res){
     dao.joinGroup(req.params.groupId, req.params.userId, function(group, err){
         if(err){
             res.status(err.status).send(err.message);

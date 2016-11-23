@@ -39,8 +39,8 @@ exports.create = function(newGr, callback){
 		if(err){
 			return callback(null, {status : 500, message : 'Error ' + err});
 		}
-		if (creGroup) {
-			return callback(creGroup, null);
+		if (group) {
+			return callback(group, null);
 		}
 	});
 }

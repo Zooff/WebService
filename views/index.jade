@@ -5,20 +5,33 @@ block content
   p Welcome to #{title}
 
   #wrapper
+  div
+    h2 SignUp
+    form(name="signup", method="post", action="/users/signup")
+        div.input
+            span.label Firstname
+            input(type="text", name="firstname")
+        div.input
+            span.label Lastname
+            input(type="text", name="lastname")
+        div.input
+            span.label email
+            input(type="text", name="email")
+        div.input
+            span.label Biography
+            textarea(name="description", cols="40", rows="5")
+        div.actions
+            input(type="submit", value="Signup !")
 
-  h2 SignUp
-  form(name="signup", method="post", action="/users/signup")
-      div.input
-          span.label Firstname
-          input(type="text", name="firstname")
-      div.input
-          span.label Lastname
-          input(type="text", name="lastname")
-      div.input
-          span.label email
-          input(type="text", name="email")
-      div.input
-          span.label Biography
-          textarea(name="description", cols="40", rows="5")
-      div.actions
-          input(type="submit", value="Signup !")
+  #wrapper
+  div
+    h2 Groups
+    form(name="addGroups", method="post", action="/groups/createGroup")
+        div.input
+            span.label Name
+            input(type="text", name="name")
+        div.input
+            span.label Description
+            textarea(name="description", cols="40", rows="5")
+        div.actions
+            input(type="submit", value="Create !")
