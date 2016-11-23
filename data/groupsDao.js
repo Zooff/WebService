@@ -45,12 +45,20 @@ exports.create = function(newGr, callback){
 	});
 }
 
-exports.updateDesc = function(id, callback){
+exports.updateDesc = function(id, newDesc, callback){
 	Groups.findOne({_id : id}, function(err, group){
 		if(err){
 			return callback(null, {status : 500, message : 'Error ' + err});
-		} else {
-			return callback(group, null);
+		} 
+		if (group) {
+			group.description = newDesc;
+			return group.save(function(err, groupModif){
+				if(err){
+					return callback(null, {status : 500, message : 'Error ' + err});
+				} else {
+					return callback(groupModif, null);
+				}
+			});
 		}
 	});
 }
