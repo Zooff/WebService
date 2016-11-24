@@ -22,7 +22,7 @@ router.post('/signup', function(req, res){
       res.status(err.status).send(err.message);
     }
     else {
-      res.status(200).send("Welcome to our Social network");
+      res.status(200).json(user);
     }
   })
 });
