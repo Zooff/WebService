@@ -1,0 +1,25 @@
+<doctype html>
+<html ng-app="index">
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.1/angular.min.js"></script>
+		<script src="core.js"></script>
+	</head>
+
+	<body>
+		
+		<h1 ng-controller="f">Welcome to our social network !</h1>
+
+		<h3>Sign in</h3>
+		<div>
+    		<form name="signin" method="post" action="/users/signin">
+        		Email : <input type="text"><br>
+        		Password : <input type="password"><br>
+        		<input type="submit"><br>
+        	</form>
+		</div>
+
+		<input type="button" value="Sign up" onclick="location.href = 'http://localhost:3000/signup';">
+
+	</body>
+</html>
