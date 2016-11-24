@@ -27,7 +27,7 @@ router.delete('/:groupId', function(req, res){
 		if(err){
      	 	res.status(err.status).send(err.message);
     	} else {
-      		res.status(200);
+      		res.status(200).send("Group Delete");
       	}
 	});
 });

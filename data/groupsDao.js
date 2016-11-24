@@ -28,7 +28,7 @@ exports.delete = function(id, callback){
 		if (err){
       		return callback({status : 500, message : 'Error: ' + err});
     	} else {
-    		return callback('The group has been removed !');
+    		return callback(null);
     	}
 	});
 }
