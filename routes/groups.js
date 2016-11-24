@@ -54,7 +54,7 @@ router.put('/:groupId', function(req, res){
     });
 });
 
-router.put('/join/:groupId/:userId', function(req, res){
+router.get('/:groupId/join/:userId', function(req, res){
     dao.joinGroup(req.params.groupId, req.params.userId, function(group, err){
         if(err){
             res.status(err.status).send(err.message);
@@ -63,5 +63,15 @@ router.put('/join/:groupId/:userId', function(req, res){
         }
     });
 });
+
+router.get('/:groupId/leave/:userId', function(req, res){
+    dao.leaveGroup(req.params.groupId, req.params.userId, function(group, err){
+        if(err){
+            res.status(err.status).send(err.message);
+        } else {
+            res.status(200).send("The user has been removed from the group");
+        }
+    })
+})
 
 module.exports = router;
