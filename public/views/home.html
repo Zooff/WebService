@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="home">
 	<head>
-		<title></title>
+		<title>Home</title>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.1/angular.min.js"></script>
+		<script src="../controllers/home.js"></script>
 	</head>
 	<body>
 
@@ -9,7 +12,9 @@
 		<div ng-controller="getUsers">
 			<ul>
 				<li ng-repeat="x in myData">
-					{{ 'Email : ' + x.email + ' || FirstName : ' + x.firstname + ' || LastName : ' + x.lastname + ' || Biography : ' + x.biography + ' || Registration : ' + x.registration }}
+					<p ng-click="redirectUser(x._id)">
+						{{ 'Email : ' + x.email }}
+					</p>
 				</li>
 			</ul>
 		</div>
@@ -18,7 +23,9 @@
 		<div ng-controller="getGroups">
 			<ul>
 				<li ng-repeat="x in myData">
-					{{ 'Name : ' + x.name + ' || Description : ' + x.description + ' || Admin : ' + x.admin + ' || Members : ' + x.members + ' || Board : ' + x.board }}
+					<p ng-click="redirectGroup(x._id)">
+						{{ 'Name : ' + x.name }}
+					</p>
 				</li>
 			</ul>
 		</div>
