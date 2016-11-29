@@ -1,9 +1,5 @@
 var signup = angular.module("signup", []);
 
-signup.controller("test", function($scope){
-    $scope.test = "Ju";
-});
-
 signup.controller("submit", function($scope, $http){
     $scope.submit = function(){
     	console.log($scope.user);
