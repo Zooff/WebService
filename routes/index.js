@@ -13,7 +13,16 @@ router.get('/signup', function(req, res){
 
 router.get('/home', function(req, res) {
   res.sendfile('./public/views/home.html');
-})
+});
+
+router.get('/groups/createGroup', function(req, res) {
+  res.sendfile('./public/views/createGroup.html');
+});
+
+router.get('/groups/updateGroup', function(req, res) {
+  res.sendfile('./public/views/updateGroup.html');
+});
+
 
 router.post('/authenticate', function(req, res){
   var user = req.body;
