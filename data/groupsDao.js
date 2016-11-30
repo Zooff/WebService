@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var Groups = require('./groups.js');
 var Comments = require('./comments.js');
+var _ = require('lodash');
 
 exports.getAll = function(callback){
 	Groups.find({}, function(err, groups){
@@ -38,7 +39,7 @@ exports.create = function(newGr, callback){
 	if (!newGr.description){
 		newGr.description = "Description of group " + newGr.name;
 	}
-	var newGroup = new Groups({ name : newGr.name, description : newGr.description, admin : newGr.admin, members : [newGr.admin], board : ["First Message"] })
+	var newGroup = new Groups({ name : newGr.name, description : newGr.description, admin : newGr.admin, members : [newGr.admin], board : [] })
 	return newGroup.save(function(err, group){
 		if(err){
 			return callback(null, {status : 500, message : 'Error ' + err});
@@ -107,6 +108,34 @@ exports.leaveGroup = function(idGroup, idUser, callback){
 }
 
 
+exports.getComments = function(idGroup, callback){
+	Groups.findOne({_id : idGroup}, function(err, group){
+		if(err){
+			return callback(null, {status : 500, message : 'Error : ' + err});
+		}
+		if(group){
+			return callback(group.board, null);
+		}
+		return callback(null, {status : 404, message : 'Are you sure this groups exist ?'});
+	});
+}
+
+exports.getComment = function(idGroup, idComment, callback) {
+	Groups.findOne({_id : idGroup}, function(err, group){
+		if(err){
+			return callback(null, {status : 500, message : 'AError : ' + err});
+		}
+		if(group){
+			var comment = _.find(group.board, {_id : idComment});
+			console.log(comment);
+			if (comment)
+				return callback(comment, null);
+			return callback(null, {status : 404, message : 'Are you sure this comment exist ?'});
+		}
+	//	return callback(null, {status : 404, message : 'Are you sure this groups exist ?'});
+	});
+}
+
 exports.addComment = function(idGroup, comment, callback){
 	Groups.findOne({_id : idGroup}, function(err, group){
 		if(err){
@@ -134,5 +163,29 @@ exports.addComment = function(idGroup, comment, callback){
 				}
 			});
 		}
+	//	return callback(null, {status : 404, message : 'Are you sure this Group exist ?'})
+	});
+}
+
+
+exports.removeComment = function(idGroup, idComment, callback){
+	Groups.findOne({_id : idGroup}, function(err, group){
+		if(err){
+			return callback(null, {status : 500, message : 'Error ' + err});
+		}
+		if(group){
+			var index = group.board.indexOf(idComment);
+			if (index > -1){
+				group.board.splice(index, 1);
+				return group.save(function(err, groupModif){
+					if(err){
+						return callback(null, {status : 500, message : 'Error ' + err});
+					}
+					return callback(groupModif, null);
+				});
+			}
+			return callback(null, {status : 404, message : 'This Comment doesnt exist'});
+		}
+		return callback(null, {status : 404, message : 'Are you sure this Group exist ?'});
 	});
 }

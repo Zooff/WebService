@@ -72,8 +72,27 @@ router.get('/:groupId/leave/:userId', function(req, res){
         } else {
             res.status(200).send("The user has been removed from the group");
         }
-    })
-})
+    });
+});
+
+router.get('/:groupId/comments', function(req, res){
+	dao.getComments(req.params.groupId, function(comments, err){
+		if (err){
+			res.status(err.status).send(err.message);
+		}
+		res.status(200).json(comments);
+	});
+});
+
+router.get('/:groupId/comments/:commentId', function(req, res){
+	dao.getComment(req.params.groupId, req.params.commentId,  function(comment, err){
+		if (err){
+			res.status(err.status).send(err.message);
+		}
+		res.status(200).json(comment);
+	});
+});
+
 
 router.post('/:groupId/addComment', function(req, res) {
 	var comment = req.body;
@@ -83,6 +102,16 @@ router.post('/:groupId/addComment', function(req, res) {
 			res.status(err.status).send(err.message);
 		}
 		res.status(200).json(comm);
-	})
+	});
 });
+
+router.delete('/:groupId/comments/:idComment', function(req,res){
+	dao.removeComment(req.params.groupId, req.params.idComment, function(com, err){
+		if (err){
+			res.status(err.status).send(err.message);
+		}
+		res.status(200).json(com);
+	})
+})
+
 module.exports = router;
