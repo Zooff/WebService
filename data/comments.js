@@ -9,14 +9,10 @@ var commentSchema = new mongoose.Schema({
 		type : String,
 		ref : 'Users'
 	},
-  group : {
-    type : String,
-    ref : 'Groups'
-  }
 });
 
-usersSchema.plugin(autoIncrement.plugin, 'Users');
-var Comments = mongoose.model('Users', commentSchema);
+commentSchema.plugin(autoIncrement.plugin, 'Comments');
+var Comments = mongoose.model('Comments', commentSchema);
 
 
 

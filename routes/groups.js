@@ -55,6 +55,7 @@ router.put('/:groupId', function(req, res){
 });
 
 router.get('/:groupId/join/:userId', function(req, res){
+		console.log(req.params.groupId, req.params.userId);
     dao.joinGroup(req.params.groupId, req.params.userId, function(group, err){
         if(err){
             res.status(err.status).send(err.message);
@@ -74,4 +75,14 @@ router.get('/:groupId/leave/:userId', function(req, res){
     })
 })
 
+router.post('/:groupId/addComment', function(req, res) {
+	var comment = req.body;
+	console.log(comment);
+	dao.addComment(req.params.groupId, comment, function(comm, err){
+		if (err){
+			res.status(err.status).send(err.message);
+		}
+		res.status(200).json(comm);
+	})
+});
 module.exports = router;

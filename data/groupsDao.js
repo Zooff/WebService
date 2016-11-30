@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Groups = require('./groups.js');
+var Comments = require('./comments.js');
 
 exports.getAll = function(callback){
 	Groups.find({}, function(err, groups){
@@ -34,7 +35,10 @@ exports.delete = function(id, callback){
 }
 
 exports.create = function(newGr, callback){
-	var newGroup = new Groups({ name : newGr.name, description : newGr.description, admin : newGr.admin, members : [newGr.admin], board : newGr.board })
+	if (!newGr.description){
+		newGr.description = "Description of group " + newGr.name;
+	}
+	var newGroup = new Groups({ name : newGr.name, description : newGr.description, admin : newGr.admin, members : [newGr.admin], board : ["First Message"] })
 	return newGroup.save(function(err, group){
 		if(err){
 			return callback(null, {status : 500, message : 'Error ' + err});
@@ -49,7 +53,7 @@ exports.updateDesc = function(id, newDesc, callback){
 	Groups.findOne({_id : id}, function(err, group){
 		if(err){
 			return callback(null, {status : 500, message : 'Error ' + err});
-		} 
+		}
 		if (group) {
 			group.description = newDesc;
 			return group.save(function(err, groupModif){
@@ -66,13 +70,16 @@ exports.updateDesc = function(id, newDesc, callback){
 exports.joinGroup = function(idGroup, idUser, callback){
 	Groups.findOne({_id : idGroup}, function(err, group){
 		if(err){
-			return callback(null, {status : 500, message : 'Error ' + err});
+			return callback(null, {status : 500, message : 'Error Find Group : ' + err});
 		}
 		if(group){
+			if (group.members.indexOf(idUser) > -1){
+				return callback(null, {status : 409, message : 'User already in the group'});
+			}
 			group.members.push(idUser);
 			return group.save(function(err, groupModif){
 				if(err){
-					return callback(null, {status : 500, message : 'Error ' + err});
+					return callback(null, {status : 500, message : 'Error Save : ' + err});
 				} else {
 					return callback(groupModif, null);
 				}
@@ -93,6 +100,37 @@ exports.leaveGroup = function(idGroup, idUser, callback){
 					return callback(null, {status : 500, message : 'Error ' + err});
 				} else {
 					return callback(groupModif, null);
+				}
+			});
+		}
+	});
+}
+
+
+exports.addComment = function(idGroup, comment, callback){
+	Groups.findOne({_id : idGroup}, function(err, group){
+		if(err){
+			return callback(null, {status : 500, message : 'Error ' + err});
+		}
+		if(group){
+			var newComment = new Comments ({
+				value : comment.value,
+				author : comment.user,
+				date : new Date().toJSON()
+			});
+			newComment.save(function(err, saveComment) {
+				if (err){
+					return callback(null, {status : 500, message : 'Error Create Message : ' + err});
+				}
+				else {
+					group.board.push(saveComment);
+					return group.save(function(err, groupModif){
+						if(err){
+							return callback(null, {status : 500, message : 'Error Push Message : ' + err});
+						} else {
+							return callback(groupModif, null);
+						}
+					});
 				}
 			});
 		}

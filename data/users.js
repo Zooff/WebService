@@ -6,17 +6,18 @@ var SALT = 5;
 var autoIncrement = require('mongoose-auto-increment');
 
 var usersSchema = new mongoose.Schema({
+  _id : String,
   email : String,
   firstname : String,
   lastname : String,
   password : String,
   biography : String,
   registration : Date,
-});
+}, {_id : false});
 
-usersSchema.plugin(autoIncrement.plugin, 'Users');
+usersSchema.plugin(autoIncrement.plugin, {model : 'Users', field : '_id'});
 
-
+// Function call before a save operation
 usersSchema.pre('save', function(next){
   var user = this;
   // Dont need to hash the password if it was not modified

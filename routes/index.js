@@ -23,7 +23,7 @@ router.post('/authenticate', function(req, res){
       res.status(err.status).send(err.message);
     }
     else {
-      res.status(200).send("Good");
+      res.status(200).json(user.token);
     }
   })
 })
