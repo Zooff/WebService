@@ -4,18 +4,19 @@
 		<meta charset="UTF-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.1/angular.min.js"></script>
 		<script src="core.js"></script>
+		<script src="../controllers/index.js"></script>
 	</head>
 
 	<body>
 
-		<h1 ng-controller="f">Welcome to our social network !</h1>
+		<h1 ng-controller="f" id="1" onclick="alert(this.id)">Welcome to our social network !</h1>
 
 		<h3>Sign in</h3>
-		<div>
-    		<form name="signin" method="post" action="/authenticate">
-        		Email : <input type="text"><br>
-        		Password : <input type="password"><br>
-        		<input type="submit"><br>
+		<div ng-submit="signin()" ng-controller="signin">
+    		<form name="signin">
+        		Email : <input type="text" ng-model="user.email"><br>
+        		Password : <input type="password" ng-model="user.password"><br>
+        		<input type="submit" value="Sign In !"><br>
         	</form>
 		</div>
 

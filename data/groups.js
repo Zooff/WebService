@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 
 var groupsSchema = new mongoose.Schema({
+	_id : String,
 	name : String,
 	description : String,
 	admin : {
@@ -14,10 +15,13 @@ var groupsSchema = new mongoose.Schema({
 		type : String,
 		ref : 'Users'
 	}],
-	board : String
-})
+	board : [{
+		type : String,
+		ref : 'Comments'
+	}]
+}, {_id : false});
 
-groupsSchema.plugin(autoIncrement.plugin, 'Groups');
+groupsSchema.plugin(autoIncrement.plugin, {model : 'Groups', field : '_id'});
 var Groups = mongoose.model('Groups', groupsSchema);
 
 module.exports = Groups;

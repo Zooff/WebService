@@ -57,13 +57,13 @@ exports.update = function(id, modifiedUser, callback){
     if (user){
       user.firstname = modifiedUser.firstname;
       user.lastname = modifiedUser.lastname;
-      user.description = modifiedUser.description;
+      user.biography = modifiedUser.biography;
       return user.save(function (err, mUser){
         if (err){
           return callback(null, {status : 500, message : 'Error : ' + err});
         }
         if (mUser){
-          return callback(creUser, null);
+          return callback(mUser, null);
         }
       });
     }
@@ -102,7 +102,7 @@ exports.authenticate = function(user, callback){
         }
 
         var token = jwt.sign(userAuth, config.secret, {
-          expiresIn : 1440 // expires in 24 hours
+          expiresIn: 1440 // expires in 24 hours
         });
 
 
