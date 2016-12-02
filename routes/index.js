@@ -58,5 +58,12 @@ router.get('/groups/updateGroup', function(req, res) {
   res.sendfile('./public/views/updateGroup.html');
 });
 
+router.get('/groups/detail', function(req, res) {
+  res.sendfile('./public/views/detailGroup.html');
+});
+
+router.get('/users/detail', function(req, res) {
+  res.sendfile('./public/views/detailUser.html');
+});
 
 module.exports = router;

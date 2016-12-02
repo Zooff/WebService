@@ -67,8 +67,8 @@ router.post('/createGroup', function(req, res){
 });
 
 router.put('/:groupId', function(req, res){
-    var newDesc = req.body.description;
-    dao.updateDesc(req.param.groupId, newDesc, function(group, err){
+    var newGr = req.body;
+    dao.updateGr(req.params.groupId, newGr, function(group, err){
         if(err){
             res.status(err.status).send(err.message);
         } else {
