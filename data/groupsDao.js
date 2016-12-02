@@ -49,13 +49,15 @@ exports.create = function(newGr, callback){
 	});
 }
 
-exports.updateDesc = function(id, newDesc, callback){
+exports.updateGr = function(id, newGr, callback){
 	Groups.findOne({_id : id}, function(err, group){
 		if(err){
 			return callback(null, {status : 500, message : 'Error ' + err});
 		}
 		if (group) {
-			group.description = newDesc;
+			group.name = newGr.name;
+			group.description = newGr.description;
+			group.admin = newGr.admin;
 			return group.save(function(err, groupModif){
 				if(err){
 					return callback(null, {status : 500, message : 'Error ' + err});

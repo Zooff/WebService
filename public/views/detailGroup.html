@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="detailGroup">
+	<head>
+		<title>Group</title>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.1/angular.min.js"></script>
+		<script src="../controllers/detailGroup.js"></script>
+	</head>
+
+	<body>
+
+		<h1>The group !</h1>
+
+		<div ng-controller="getGroup">
+			<ul>
+				<li>{{ 'Name : ' + myData.name }}</li>
+				<li>{{ 'Description : ' + myData.description }}</li>
+				<li>{{ 'Admin : ' + myData.admin }}</li>
+				<li>{{ 'Members : ' + myData.members }}</li>
+				<li>{{ 'Board : ' + myData.board }}</li>
+			</ul>
+		</div>
+
+		<div ng-submit="submitComm()" ng-controller="submit">
+			<input type="button" value="Add a comment" ng-click="buttonAddComm();">
+			<form name="addComm" ng-show="comm">
+				Comment : <input type="textarea" ng-model="comment">
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+
+		<div ng-submit="submitUpd()" ng-controller="submit">
+			<input type="button" value="Update Group" ng-click="buttonUpdate();">
+    		<form name="updateGr" ng-show="upd">
+        		Name : <input type="text" ng-model="group.name"><br>
+        		Description : <input type="textarea" cols="40" rows="5" ng-model="group.description"><br>
+        		Admin : <input type="text" ng-model="group.admin"><br>
+        		<input type="submit" id="submit" value="Submit"><br>
+        	</form>
+
+        	{{ verif }}
+		</div>
+
+	</body>
+</html>
