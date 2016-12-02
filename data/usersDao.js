@@ -101,12 +101,14 @@ exports.authenticate = function(user, callback){
           return callback(null, {status : 401, message : 'Authentification Failed. Bad password'});
         }
 
-        var token = jwt.sign(userAuth, config.secret, {
+        var tknUser = {_id : userAuth._id, email : userAuth.email};
+
+        var token = jwt.sign(tknUser, 'secrettoken', {
           expiresIn: 1440 // expires in 24 hours
         });
+        console.log(token);
 
-
-        return callback({ user : userAuth, token : token}, null);
+        return callback(token, null);
 
       });
     }

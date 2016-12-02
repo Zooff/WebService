@@ -2,6 +2,28 @@ var express = require('express');
 var router = express.Router();
 var dao = require('../data/usersDao.js');
 
+
+router.use(function(req, res, next){
+
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	if (token){
+		jwt.verify(token, 'secrettoken', function(err, decoded){
+			if (err){
+				res.status(500).json({success : false, message : 'Failed to decode the JSON token ' + err});
+			}
+			else {
+				req.decoded = decoded;
+				console.log(decoded);
+				next();
+			}
+		});
+	}
+	else {
+		return res.status(403).json({success : false, message : "No token provided"});
+	}
+})
+
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   dao.FindAll(function(users,err){

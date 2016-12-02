@@ -1,6 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var dao = require('../data/groupsDao.js');
+var jwt = require('jsonwebtoken');
+var config = require
+
+
+router.use(function(req, res, next){
+
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	if (token){
+		jwt.verify(token, 'secrettoken', function(err, decoded){
+			if (err){
+				res.status(500).json({success : false, message : 'Failed to decode the JSON token ' + err});
+			}
+			else {
+				req.decoded = decoded;
+				console.log(decoded);
+				next();
+			}
+		});
+	}
+	else {
+		return res.status(403).json({success : false, message : "No token provided"});
+	}
+})
 
 router.get('/', function(req, res, next){
 	dao.getAll(function(groups, err){
@@ -111,7 +134,17 @@ router.delete('/:groupId/comments/:idComment', function(req,res){
 			res.status(err.status).send(err.message);
 		}
 		res.status(200).json(com);
-	})
-})
+	});
+});
+
+router.put('/:groupId/comments/:idComment', function(req,res){
+	var comment = req.body;
+	dao.updateComment(req.params.groupId, req.params.idComment, comment, function(com, err){
+		if (err){
+			res.status(err.status).send(err.message);
+		}
+		res.status(200).json(com);
+	});
+});
 
 module.exports = router;

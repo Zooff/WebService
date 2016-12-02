@@ -183,3 +183,20 @@ exports.removeComment = function(idGroup, idComment, callback){
 		return callback(null, {status : 404, message : 'Are you sure this Group exist ?'});
 	});
 }
+
+exports.updateComment = function(idGroup, idComment, value, callback){
+	Groups.findOne({_id : idGroup}, function(err, group){
+		if (err){
+			return callback(null, {status : 500, message : 'Error ' + err});
+		}
+		if (group){
+			var comment = _.find(group.board, {_id : idComment});
+			if (comment){
+				comment.value = value;
+				return callback(comment, null)
+			}
+			return callback(null, {status : 404, message : 'This Comment doesnt exist'});
+		}
+		return callback(null, {status : 404, message : 'Are you sure this Group exist ?'});
+	});
+}
