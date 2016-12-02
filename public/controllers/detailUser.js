@@ -16,9 +16,19 @@ detailUser.controller("submit", function($scope, $http, $location){
     		window.location.reload();
     		$scope.verif = "OK";
     	});
-    }
+    };
 
     $scope.buttonUpdate = function() {
 		$scope.upd = !$scope.upd;
-    }
+    };
+});
+
+detailUser.controller("delete", function($scope, $http, $location){
+	$scope.delete = function() {
+		var $id = $location.search().id;
+		$http.delete("/users/" + $id).then(function(response){
+			window.location = 'http://localhost:3000/';
+			$scope.verif = "OK";
+		})
+	}
 });
