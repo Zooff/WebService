@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose');
 var Groups = require('./groups.js');
-var Comments = require('./comments.js');
 var _ = require('lodash');
 
 exports.getAll = function(callback){
@@ -123,13 +122,17 @@ exports.getComments = function(idGroup, callback){
 exports.getComment = function(idGroup, idComment, callback) {
 	Groups.findOne({_id : idGroup}, function(err, group){
 		if(err){
-			return callback(null, {status : 500, message : 'AError : ' + err});
+			return callback(null, {status : 500, message : 'Error : ' + err});
 		}
 		if(group){
+
 			var comment = _.find(group.board, {_id : idComment});
+
 			console.log(comment);
-			if (comment)
+
+			if (comment){
 				return callback(comment, null);
+			}
 			return callback(null, {status : 404, message : 'Are you sure this comment exist ?'});
 		}
 	//	return callback(null, {status : 404, message : 'Are you sure this groups exist ?'});
@@ -142,24 +145,14 @@ exports.addComment = function(idGroup, comment, callback){
 			return callback(null, {status : 500, message : 'Error ' + err});
 		}
 		if(group){
-			var newComment = new Comments ({
-				value : comment.value,
-				author : comment.user,
-				date : new Date().toJSON()
-			});
-			newComment.save(function(err, saveComment) {
-				if (err){
-					return callback(null, {status : 500, message : 'Error Create Message : ' + err});
-				}
-				else {
-					group.board.push(saveComment);
-					return group.save(function(err, groupModif){
-						if(err){
-							return callback(null, {status : 500, message : 'Error Push Message : ' + err});
-						} else {
-							return callback(groupModif, null);
-						}
-					});
+			var newComment = {_id : group.board.length, value : comment.value, user : comment.user, date : new Date().toJSON()};
+			console.log(newComment);
+			group.board.push(newComment);
+			return group.save(function(err, groupModif){
+				if(err){
+					return callback(null, {status : 500, message : 'Error Push Message : ' + err});
+				} else {
+					return callback(groupModif, null);
 				}
 			});
 		}
@@ -174,7 +167,8 @@ exports.removeComment = function(idGroup, idComment, callback){
 			return callback(null, {status : 500, message : 'Error ' + err});
 		}
 		if(group){
-			var index = group.board.indexOf(idComment);
+			var index = _.findIndex(group.board, {_id : idComment});
+			console.log(index);
 			if (index > -1){
 				group.board.splice(index, 1);
 				return group.save(function(err, groupModif){

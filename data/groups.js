@@ -16,8 +16,10 @@ var groupsSchema = new mongoose.Schema({
 		ref : 'Users'
 	}],
 	board : [{
-		type : String,
-		ref : 'Comments'
+		_id : String,
+		user : String,
+		value : String,
+		date : Date
 	}]
 }, {_id : false});
 

@@ -101,7 +101,7 @@ router.post('/:groupId/addComment', function(req, res) {
 		if (err){
 			res.status(err.status).send(err.message);
 		}
-		res.status(200).json(comm);
+		res.status(200).send(comm);
 	});
 });
 
