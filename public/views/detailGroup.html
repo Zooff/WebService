@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html ng-app="detailGroup">
 	<head>
 		<title>Group</title>
@@ -7,7 +7,7 @@
 		<script src="../controllers/detailGroup.js"></script>
 	</head>
 
-	<body>
+	<body> -->
 
 		<h1>The group !</h1>
 
@@ -21,7 +21,7 @@
 			</ul>
 		</div>
 
-		<div ng-submit="submitComm()" ng-controller="submit">
+		<div ng-submit="submitComm()" ng-controller="submitGr">
 			<input type="button" value="Add a comment" ng-click="buttonAddComm();">
 			<form name="addComm" ng-show="comm">
 				Comment : <input type="textarea" ng-model="comment">
@@ -29,7 +29,7 @@
 			</form>
 		</div>
 
-		<div ng-submit="submitUpd()" ng-controller="submit">
+		<div ng-submit="submitUpd()" ng-controller="submitGr">
 			<input type="button" value="Update Group" ng-click="buttonUpdate();">
     		<form name="updateGr" ng-show="upd">
         		Name : <input type="text" ng-model="group.name"><br>
@@ -41,7 +41,7 @@
         	{{ verif }}
 		</div>
 
-		<input type="button" value="Delete group" ng-click="delete();" ng-controller="delete">
+		<input type="button" value="Delete group" ng-click="delete();" ng-controller="deleteGr">
 
-	</body>
-</html>
+	<!-- </body>
+</html> -->

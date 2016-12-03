@@ -1,19 +1,19 @@
-var home = angular.module("home", []);
+angular.module('webapp')
 
-home.controller("getUsers", function($scope, $http){
+.controller("getUsers", function($scope, $http, authService){
 	$scope.redirectUser = function($id){
-		window.location = 'http://localhost:3000/users/detail#!?id=' + $id;
+		window.location = '/users/' + $id;
 	};
-	$http.get("/users").then(function(response){
+	$http.get("/api/users").then(function(response){
 		$scope.myData = response.data;
 	});
-});
+})
 
-home.controller("getGroups", function($scope, $http){
+.controller("getGroups", function($scope, $http, authService){
 	$scope.redirectGroup = function($id){
-		window.location = 'http://localhost:3000/groups/detail#!?id=' + $id; 
+		window.location = '/groups/' + $id;
 	};
-	$http.get("/groups").then(function(response){
+	$http.get("/api/groups").then(function(response){
 		$scope.myData = response.data;
 	});
 });

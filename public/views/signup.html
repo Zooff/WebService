@@ -1,28 +1,15 @@
-<!DOCTYPE html>
-<html ng-app="signup">
-	<head>
-		<title>Sign up</title>
-		<meta charset="UTF-8">
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.1/angular.min.js"></script>
-		<script src="../controllers/signup.js"></script>
-	</head>
 
-	<body>
+<h1>Join us !</h1>
 
-		<h1>Join us !</h1>
+<div ng-submit="submit()" ng-controller="signup">
+		<form name="signupForm">
+    		First Name : <input type="text" ng-model="user.firstname"><br>
+    		Last Name : <input type="text" ng-model="user.lastname"><br>
+    		Email : <input type="text" ng-model="user.email"><br>
+    		Password : <input type="password" ng-model="user.password"><br>
+    		Biography : <input type="textarea" cols="40" rows="5" ng-model="user.biography"><br>
+    		<input type="submit" id="submit" value="Submit"><br>
+    	</form>
 
-		<div ng-submit="submit()" ng-controller="submit">
-    		<form name="signup">
-        		First Name : <input type="text" ng-model="user.firstname"><br>
-        		Last Name : <input type="text" ng-model="user.lastname"><br>
-        		Email : <input type="text" ng-model="user.email"><br>
-        		Password : <input type="password" ng-model="user.password"><br>
-        		Biography : <input type="textarea" cols="40" rows="5" ng-model="user.biography"><br>
-        		<input type="submit" id="submit" value="Submit"><br>
-        	</form>
-
-        	{{ verif }}
-		</div>
-
-	</body>
-</html>
+    	{{ verif }}
+</div>

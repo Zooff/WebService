@@ -15,7 +15,6 @@ router.use(function(req, res, next){
 			}
 			else {
 				req.decoded = decoded;
-				console.log(decoded);
 				next();
 			}
 		});
@@ -118,8 +117,7 @@ router.get('/:groupId/comments/:commentId', function(req, res){
 
 
 router.post('/:groupId/addComment', function(req, res) {
-	var comment = req.body;
-	console.log(comment);
+	var comment = {user : req.decoded._id, value : req.body.value};
 	dao.addComment(req.params.groupId, comment, function(comm, err){
 		if (err){
 			res.status(err.status).send(err.message);

@@ -1,26 +1,38 @@
 <doctype html>
-<html ng-app="index">
+<html ng-app="webapp">
 	<head>
+		<base href="/">
 		<meta charset="UTF-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.1/angular.min.js"></script>
 		<script src="core.js"></script>
+		<script src="../javascripts/angular-route.js"></script>
 		<script src="../controllers/index.js"></script>
+		<script src="../controllers/signup.js"></script>
+		<script src="../controllers/home.js"></script>
+		<script src="../controllers/detailGroup.js"></script>
+		<script src="../controllers/detailUser.js"></script>
+		<script src="../services/authenticationService.js"></script>
 	</head>
 
 	<body>
 
-		<h1 ng-controller="f" id="1" onclick="alert(this.id)">Welcome to our social network !</h1>
+		<div ng-view>
+		</div>
+
+		<!-- <h1 >Welcome to our social network !</h1>
 
 		<h3>Sign in</h3>
 		<div ng-submit="signin()" ng-controller="signin">
-    		<form name="signin">
-        		Email : <input type="text" ng-model="user.email"><br>
-        		Password : <input type="password" ng-model="user.password"><br>
-        		<input type="submit" value="Sign In !"><br>
-        	</form>
+		    <form name="signinForm">
+		        Email : <input type="text" ng-model="user.email"><br>
+		        Password : <input type="password" ng-model="user.password"><br>
+		        <input type="submit" value="Sign In !"><br>
+		      </form>
 		</div>
 
-		<input type="button" value="Sign up" onclick="location.href = 'http://localhost:3000/signup';">
+
+		<input type="button" value="Sign up" ng-click="moveTosignUp()"> -->
+
 
 	</body>
 </html>

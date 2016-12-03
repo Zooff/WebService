@@ -1,13 +1,15 @@
-var signup = angular.module("index", []);
+angular.module('webapp')
 
-console.log("Load");
-
-index.controller("signin", function($scope, $http){
+.controller("signin", function($scope, $http, authService){
     $scope.signin = function(){
-    	console.log($scope.user);
-    	$http.post("/authenticate", $scope.user).then(function(response){
-    		$scope.verif = "OK";
-        console.log(response.data);
-    	});
+      authService.login($scope.user, function(res){
+        window.location = "/home";
+      }, function(res){
+        alert(res.data);
+      });
+    };
+
+    $scope.moveTosignUp = function(){
+      window.location = '/signup';
     }
 });

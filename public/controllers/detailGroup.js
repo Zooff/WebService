@@ -1,18 +1,20 @@
-var detailGroup = angular.module("detailGroup", []);
+angular.module('webapp')
 
-detailGroup.controller("getGroup", function($scope, $http, $location){
-	var $id = $location.search().id;
-	$http.get("/groups/" + $id).then(function(response){
+.controller("getGroup", function($scope, $http, $routeParams, authService){
+	var $id = $routeParams.id;
+	console.log($id);
+	$http.get("/api/groups/" + $id).then(function(response){
 		$scope.myData = response.data;
+		console.log(response.data.board);
 	});
-});
+})
 
-detailGroup.controller("submit", function($scope, $http, $location){
+.controller("submitGr", function($scope, $http, $routeParams, authService){
     $scope.submitUpd = function(){
-    	var $id = $location.search().id;
+    	var $id = $routeParams.id;
     	console.log($scope.group);
     	console.log($id);
-    	$http.put("/groups/" + $id, $scope.group).then(function(response){
+    	$http.put("/api/groups/" + $id, $scope.group).then(function(response){
     		window.location.reload();
     		$scope.verif = "OK";
     	});
@@ -23,10 +25,10 @@ detailGroup.controller("submit", function($scope, $http, $location){
     };
 
     $scope.submitComm = function(){
-    	var $id = $location.search().id;
+    	var $id = $routeParams.id;
     	console.log($scope.group);
     	console.log($id);
-    	$http.post("/groups/" + $id + "/addComment", $scope.comment).then(function(response){
+    	$http.post("/api/groups/" + $id + "/addComment", $scope.comment).then(function(response){
     		window.location.reload();
     		$scope.verif = "OK";
     	});
@@ -35,13 +37,13 @@ detailGroup.controller("submit", function($scope, $http, $location){
     $scope.buttonAddComm = function() {
     	$scope.comm = !$scope.comm;
     };
-});
+})
 
-detailGroup.controller("delete", function($scope, $http, $location){
+.controller("deleteGr", function($scope, $http, authService){
 	$scope.delete = function(){
-		var $id = $location.search().id;
-		$http.delete("/groups/" + $id).then(function(response){
-			window.location = 'http://localhost:3000/home';
+		var $id = $routeParams.id;
+		$http.delete("/api/groups/" + $id).then(function(response){
+			window.location = '/home';
 			$scope.verif = "OK";
 		});
 	};
