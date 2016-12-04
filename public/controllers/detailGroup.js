@@ -46,4 +46,18 @@ angular.module('webapp')
 			$scope.verif = "OK";
 		});
 	};
+
+	$scope.join = function(){
+		var $id = $routeParams.id;
+		$http.put("api/groups/" + $id + "/join").then(function(response){
+			window.location.reload();
+		});
+	}
+
+	$scope.leave = function(){
+		var $id = $routeParams.id;
+		$http.put("api/groups/" + $id + "/leave").then(function(response){
+			window.location.reload();
+		});
+	};
 });

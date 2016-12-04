@@ -17,7 +17,10 @@
 				<li>{{ 'Description : ' + myData.description }}</li>
 				<li>{{ 'Admin : ' + myData.admin }}</li>
 				<li>{{ 'Members : ' + myData.members }}</li>
-				<li>{{ 'Board : ' + myData.board }}</li>
+				<li>{{ 'Board : ' + myData.board}}</li>
+				<p ng-repeat="comment in myData.board">
+					<!-- <li>{{ 'Comment : ' + comment }}</li> -->
+				</p>
 			</ul>
 		</div>
 
@@ -37,9 +40,10 @@
         		Admin : <input type="text" ng-model="group.admin"><br>
         		<input type="submit" id="submit" value="Submit"><br>
         	</form>
-
-        	{{ verif }}
 		</div>
+
+		<input type="button" value="Join the group" ng-click="join();" ng-controller="deleteGr">
+		<input type="button" value="Leave the group" ng-click="leave();" ng-controller="deleteGr">
 
 		<input type="button" value="Delete group" ng-click="delete();" ng-controller="deleteGr">
 
