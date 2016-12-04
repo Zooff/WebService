@@ -55,6 +55,7 @@ exports.update = function(id, modifiedUser, callback){
       return callback(null, {status : 500, message : 'Error : ' + err});
     }
     if (user){
+      console.log(modifiedUser);
       if (modifiedUser.firstname)
         user.firstname = modifiedUser.firstname;
       if (modifiedUser.lastname)

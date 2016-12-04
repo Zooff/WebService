@@ -25,8 +25,8 @@ angular.module('webapp')
 
     $scope.submitComm = function(){
     	var $id = $routeParams.id;
-    	console.log($scope.group);
     	console.log($id);
+			console.log($scope.comment);
     	$http.post("/api/groups/" + $id + "/addComment", $scope.comment).then(function(response){
     		window.location.reload();
     		$scope.verif = "OK";
@@ -38,7 +38,7 @@ angular.module('webapp')
     };
 })
 
-.controller("deleteGr", function($scope, $http, authService){
+.controller("deleteGr", function($scope, $http, $routeParams, authService){
 	$scope.delete = function(){
 		var $id = $routeParams.id;
 		$http.delete("/api/groups/" + $id).then(function(response){

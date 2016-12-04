@@ -18,23 +18,11 @@ var token = '';
 describe('Users', function() {
 
 
-  before(function(done){
-    var userToAdd = new Users({
-        email: 'test@test.fr',
-        password: 'password',
-        firstname: 'test',
-        lastname: 'test',
-        registrationDate: new Date().toJSON().slice(0,10),
-        biography: ''
-    });
-    userToAdd.save(function(err) {
-        done();
-    });
-  });
-
   after(function(done){
        mongoose.connection.collections.users.drop();
+       mongoose.connection.collections.groups.drop();
        mongoose.connection.collections.identitycounters.drop();
+
        done();
      });
 
@@ -43,7 +31,7 @@ describe('Users', function() {
     chai.request(app)
     .post('/api/authenticate')
     .send({
-      email: 'test@test.fr',
+      email: 'testadmin@test.fr',
       password: 'password',
     })
     .end(function(err, res){
