@@ -56,6 +56,7 @@ router.delete('/:groupId', function(req, res){
 
 router.post('/createGroup', function(req, res){
     var newGroup = req.body;
+		console.log(newGroup);
     dao.create(newGroup, function(group, err){
         if(err){
             res.status(err.status).send(err.message);

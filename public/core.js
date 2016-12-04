@@ -17,6 +17,9 @@ webapp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     .when('/users/:id', {
       templateUrl : 'views/detailUser.html'
     })
+    .when('/groups/createGroup', {
+      templateUrl : 'views/createGroup.html'
+    })
     .when('/groups/:id' ,{
       templateUrl : 'views/detailGroup.html'
     })

@@ -17,9 +17,8 @@
 				<li>{{ 'Description : ' + myData.description }}</li>
 				<li>{{ 'Admin : ' + myData.admin }}</li>
 				<li>{{ 'Members : ' + myData.members }}</li>
-				<li>{{ 'Board : ' + myData.board}}</li>
-				<p ng-repeat="comment in myData.board">
-					<!-- <li>{{ 'Comment : ' + comment }}</li> -->
+				<p ng-repeat="n in range(0,size)">
+					Comment : {{myData.board[n].value}}  | UserId : {{myData.board[n].user}} | Date : {{myData.board[n].date}}
 				</p>
 			</ul>
 		</div>

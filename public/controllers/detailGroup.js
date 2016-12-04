@@ -5,7 +5,17 @@ angular.module('webapp')
 	console.log($id);
 	$http.get("/api/groups/" + $id).then(function(response){
 		$scope.myData = response.data;
+		$scope.size = response.data.board.length;
+		console.log($scope.size);
 	});
+	$scope.range = function(min, max, step) {
+    step = step || 1;
+    var input = [];
+    for (var i = min; i <= max; i += step) {
+        input.push(i);
+    }
+    return input;
+};
 })
 
 .controller("submitGr", function($scope, $http, $routeParams, authService){

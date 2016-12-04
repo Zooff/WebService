@@ -13,6 +13,9 @@ angular.module('webapp')
 	$scope.redirectGroup = function($id){
 		window.location = '/groups/' + $id;
 	};
+	$scope.moveToCreateGroup = function(){
+		window.location = '/groups/createGroup';
+	}
 	$http.get("/api/groups").then(function(response){
 		$scope.myData = response.data;
 	});
