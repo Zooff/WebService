@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var dao = require('../data/usersDao.js');
+var jwt = require('jsonwebtoken');
+
 
 
 router.use(function(req, res, next){
@@ -35,18 +37,6 @@ router.get('/', function(req, res, next) {
     }
   })
 
-});
-
-router.post('/signup', function(req, res){
-  var newUser = req.body;
-  dao.addUser(newUser, function(user, err){
-    if (err){
-      res.status(err.status).send(err.message);
-    }
-    else {
-      res.status(200).json(user);
-    }
-  })
 });
 
 router.get('/:userId', function(req,res){

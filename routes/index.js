@@ -1,6 +1,8 @@
 var express = require('express');
 var dao = require('../data/usersDao.js');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,6 +13,17 @@ router.get('/signup', function(req, res){
     res.sendfile('./public/views/signup.html');
 });
 
+router.post('/signup', function(req, res){
+  var newUser = req.body;
+  dao.addUser(newUser, function(user, err){
+    if (err){
+      res.status(err.status).send(err.message);
+    }
+    else {
+      res.status(200).json(user);
+    }
+  })
+});
 
 router.post('/authenticate', function(req, res){
   var user = req.body;

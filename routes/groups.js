@@ -77,7 +77,7 @@ router.put('/:groupId', function(req, res){
     });
 });
 
-router.get('/:groupId/join/:userId', function(req, res){
+router.put('/:groupId/join/:userId', function(req, res){
 		console.log(req.params.groupId, req.params.userId);
     dao.joinGroup(req.params.groupId, req.params.userId, function(group, err){
         if(err){
@@ -88,7 +88,7 @@ router.get('/:groupId/join/:userId', function(req, res){
     });
 });
 
-router.get('/:groupId/leave/:userId', function(req, res){
+router.put('/:groupId/leave/:userId', function(req, res){
     dao.leaveGroup(req.params.groupId, req.params.userId, function(group, err){
         if(err){
             res.status(err.status).send(err.message);

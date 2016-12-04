@@ -37,7 +37,7 @@ detailGroup.controller("submit", function($scope, $http, $location){
     };
 });
 
-detailGroup.controller("delete", function($scope, $http, $location){
+detailGroup.controller("action", function($scope, $http, $location){
 	$scope.delete = function(){
 		var $id = $location.search().id;
 		$http.delete("/groups/" + $id).then(function(response){
@@ -45,4 +45,18 @@ detailGroup.controller("delete", function($scope, $http, $location){
 			$scope.verif = "OK";
 		});
 	};
+
+	$scope.join = function(){
+		var $id = $location.search().id;
+		$http.put("/groups/" + $id + "join/" + $iduser).then(function(response){
+			window.location.reload();
+		})
+	}
+
+	$scope.leave = function(){
+		var $id = $location.search().id;
+		$http.put("/groups/" + $id + "leave/" + $iduser).then(function(response){
+			window.location.reload();
+		})
+	}
 });
