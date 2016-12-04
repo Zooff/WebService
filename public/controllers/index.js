@@ -1,13 +1,15 @@
-var index = angular.module("index", []);
+angular.module('webapp')
 
-console.log("Load");
+.controller("signin", function($scope, $http, authService){
+    $scope.signin = function(){
+      authService.login($scope.user, function(res){
+        window.location = "/home";
+      }, function(res){
+        alert(res.data);
+      });
+    };
 
-index.controller("signin", function($scope, $http){
-    $scope.signinaa = function(){
-    	console.log($scope.user);
-    	$http.post("/authenticate", $scope.user).then(function(response){
-    		$scope.verif = "OK";
-        console.log(response.data);
-    	});
+    $scope.moveTosignUp = function(){
+      window.location = '/signup';
     }
 });

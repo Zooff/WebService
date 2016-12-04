@@ -4,7 +4,8 @@
   "private": true,
   "description": "A RESTful social network",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "NODE_ENV=dev node ./bin/www",
+    "test" : "NODE_ENV=test mocha"
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
@@ -18,5 +19,10 @@
     "mongoose-auto-increment": "~5.0.1",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0"
+  },
+  "dev-dependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.2.0"
   }
 }

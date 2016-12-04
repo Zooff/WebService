@@ -55,9 +55,12 @@ exports.update = function(id, modifiedUser, callback){
       return callback(null, {status : 500, message : 'Error : ' + err});
     }
     if (user){
-      user.firstname = modifiedUser.firstname;
-      user.lastname = modifiedUser.lastname;
-      user.biography = modifiedUser.biography;
+      if (modifiedUser.firstname)
+        user.firstname = modifiedUser.firstname;
+      if (modifiedUser.lastname)
+        user.lastname = modifiedUser.lastname;
+      if (modifiedUser.biography)
+        user.biography = modifiedUser.biography;
       return user.save(function (err, mUser){
         if (err){
           return callback(null, {status : 500, message : 'Error : ' + err});
@@ -106,7 +109,6 @@ exports.authenticate = function(user, callback){
         var token = jwt.sign(tknUser, 'secrettoken', {
           expiresIn: 1440 // expires in 24 hours
         });
-        console.log(token);
 
         return callback(token, null);
 

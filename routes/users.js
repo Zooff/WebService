@@ -51,26 +51,37 @@ router.get('/:userId', function(req,res){
 });
 
 router.put('/:userId', function(req, res){
-  var modifiedUser = req.body;
-  dao.update(req.params.userId, modifiedUser, function(group, err){
-      if(err){
-          res.status(err.status).send(err.message);
-      } else {
-          res.status(200).send("The User has been changed");
-      }
-  });
+	if (req.decoded._id == req.params.userId){
+		console.log(req.body);
+	  var modifiedUser = {firstname : req.body.firstname, lastname : req.body.lastname, biography : req.body.biography};
+				console.log(modifiedUser);
+	  dao.update(req.params.userId, modifiedUser, function(group, err){
+	      if(err){
+	          res.status(err.status).send(err.message);
+	      } else {
+	          res.status(200).send("The User has been changed");
+	      }
+  	});
+	}
+	else {
+		res.status(403).send({success : false, message : 'You cant modify an other users'});
+	}
 });
 
 router.delete('/:userId', function(req,res){
-  dao.removeUser(req.params.userId, function(err){
-    if (err){
-      res.status(err.status).send(err.message);
-    }
-    else {
-      res.status(200).send("The user has been killed");
-    }
-  })
-
+  if (req.decoded._id == req.params.userId){
+    dao.removeUser(req.params.userId, function(err){
+      if (err){
+        res.status(err.status).send(err.message);
+      }
+      else {
+        res.status(200).send("The user has been killed");
+      }
+    });
+  }
+  else {
+    res.status(403).send({success : false, message : 'Action Forbidden'});
+  }
 });
 
 

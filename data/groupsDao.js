@@ -24,13 +24,17 @@ exports.get = function(id, callback){
 	});
 }
 
-exports.delete = function(id, callback){
-	Groups.findOneAndRemove({_id : id}, function(err){
+exports.delete = function(idGroup, idUser, callback){
+	Groups.findOneAndRemove({_id : idGroup}, function(err, group){
 		if (err){
       		return callback({status : 500, message : 'Error: ' + err});
-    	} else {
-    		return callback(null);
     	}
+    	if(group){
+    		if(group.admin != idUser){
+    			return callback({status : 403, message : 'You can\'t delete this group'});
+    		}
+			return callback(null);
+		}
 	});
 }
 
@@ -49,12 +53,15 @@ exports.create = function(newGr, callback){
 	});
 }
 
-exports.updateGr = function(id, newGr, callback){
+exports.updateGr = function(id, newGr, idUser, callback){
 	Groups.findOne({_id : id}, function(err, group){
 		if(err){
 			return callback(null, {status : 500, message : 'Error ' + err});
 		}
 		if (group) {
+			if(group.admin != idUser){
+    			return callback({status : 403, message : 'You can\'t update this group'});
+    		}
 			group.name = newGr.name;
 			group.description = newGr.description;
 			group.admin = newGr.admin;

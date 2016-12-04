@@ -1,17 +1,27 @@
-var index = angular.module("index", []);
+var webapp = angular.module('webapp', ['ngRoute']);
 
-index.controller("f", function($scope){
-    $scope.test = "Ju";
-});
+webapp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
 
-index.controller("getUsers", function($scope, $http){
-	$http.get("/users").then(function(response){
-		$scope.myData = response.data;
-	});
-});
-
-index.controller("getGroups", function($scope, $http){
-	$http.get("/groups").then(function(response){
-		$scope.myData = response.data;
-	});
-});
+  $routeProvider
+    .when('/' , {
+      templateUrl : 'views/signin.html',
+      controller : 'signin'
+    })
+    .when('/signup', {
+      templateUrl : 'views/signup.html',
+      controller : 'signup'
+    })
+    .when('/home' , {
+      templateUrl : 'views/home.html',
+    })
+    .when('/users/:id', {
+      templateUrl : 'views/detailUser.html'
+    })
+    .when('/groups/:id' ,{
+      templateUrl : 'views/detailGroup.html'
+    })
+    .otherwise({
+      redirectTo : '/'
+    });
+  $locationProvider.html5Mode(true);
+}]);

@@ -15,7 +15,6 @@ router.use(function(req, res, next){
 			}
 			else {
 				req.decoded = decoded;
-				console.log(decoded);
 				next();
 			}
 		});
@@ -46,7 +45,7 @@ router.get('/:groupId', function(req, res, next){
 });
 
 router.delete('/:groupId', function(req, res){
-	dao.delete(req.params.groupId, function(err){
+	dao.delete(req.params.groupId, req.decoded._id, function(err){
 		if(err){
      	 	res.status(err.status).send(err.message);
     	} else {
@@ -68,18 +67,18 @@ router.post('/createGroup', function(req, res){
 
 router.put('/:groupId', function(req, res){
     var newGr = req.body;
-    dao.updateGr(req.params.groupId, newGr, function(group, err){
+    dao.updateGr(req.params.groupId, newGr, req.decoded._id, function(group, err){
         if(err){
             res.status(err.status).send(err.message);
         } else {
-            res.status(200).send("The description of this group has been changed");
+            res.status(200).send("The group has been updated");
         }
     });
 });
 
-router.put('/:groupId/join/:userId', function(req, res){
-		console.log(req.params.groupId, req.params.userId);
-    dao.joinGroup(req.params.groupId, req.params.userId, function(group, err){
+router.put('/:groupId/join', function(req, res){
+		console.log(req.params.groupId, req.decoded._id);
+    dao.joinGroup(req.params.groupId, req.decoded._id, function(group, err){
         if(err){
             res.status(err.status).send(err.message);
         } else {
@@ -88,8 +87,8 @@ router.put('/:groupId/join/:userId', function(req, res){
     });
 });
 
-router.put('/:groupId/leave/:userId', function(req, res){
-    dao.leaveGroup(req.params.groupId, req.params.userId, function(group, err){
+router.put('/:groupId/leave', function(req, res){
+    dao.leaveGroup(req.params.groupId, req.decoded._id, function(group, err){
         if(err){
             res.status(err.status).send(err.message);
         } else {
@@ -118,8 +117,7 @@ router.get('/:groupId/comments/:commentId', function(req, res){
 
 
 router.post('/:groupId/addComment', function(req, res) {
-	var comment = req.body;
-	console.log(comment);
+	var comment = {user : req.decoded._id, value : req.body.value};
 	dao.addComment(req.params.groupId, comment, function(comm, err){
 		if (err){
 			res.status(err.status).send(err.message);

@@ -1,0 +1,13 @@
+<h1 >Welcome to our social network !</h1>
+
+<h3>Sign in</h3>
+<div ng-submit="signin()" ng-controller="signin">
+    <form name="signinForm">
+        Email : <input type="text" ng-model="user.email"><br>
+        Password : <input type="password" ng-model="user.password"><br>
+        <input type="submit" value="Sign In !"><br>
+      </form>
+</div>
+
+
+<input type="button" value="Sign up" ng-click="moveTosignUp()">

@@ -8,14 +8,17 @@ var config = require('./config.js');
 
 //Database à refaire
 var mongoose = require('mongoose');
-mongoose.connect(config.database);
+mongoose.connect(config.database[process.env.NODE_ENV]);
 var db = mongoose.connection;
+
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(db);
+
 db.on('error', console.error.bind(console, "Connection Error"));
 db.on('open', function(){
   console.log("Connexion Réussi")}
 );
-var autoIncrement = require('mongoose-auto-increment');
-autoIncrement.initialize(db);
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -37,9 +40,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/groups', groups);
+app.use('/api', index);
+app.use('/api/users', users);
+app.use('/api/groups', groups);
+
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
+// application -------------------------------------------------------------
+app.get('*', function(req, res) {
+  res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -59,9 +68,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// application -------------------------------------------------------------
-app.get('*', function(req, res) {
-  res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
-});
+
 
 module.exports = app;
