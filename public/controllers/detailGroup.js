@@ -5,7 +5,6 @@ angular.module('webapp')
 	console.log($id);
 	$http.get("/api/groups/" + $id).then(function(response){
 		$scope.myData = response.data;
-		console.log(response.data.board);
 	});
 })
 

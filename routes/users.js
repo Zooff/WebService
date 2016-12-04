@@ -52,7 +52,9 @@ router.get('/:userId', function(req,res){
 
 router.put('/:userId', function(req, res){
 	if (req.decoded._id == req.params.userId){
-	  var modifiedUser = {firstname : req.params.firstname, lastname : req.params.lastname, biography : req.params.biography};
+		console.log(req.body);
+	  var modifiedUser = {firstname : req.body.firstname, lastname : req.body.lastname, biography : req.body.biography};
+				console.log(modifiedUser);
 	  dao.update(req.params.userId, modifiedUser, function(group, err){
 	      if(err){
 	          res.status(err.status).send(err.message);

@@ -13,7 +13,7 @@ angular.module('webapp')
     	console.log($scope.user);
     	console.log($id);
     	$http.put("/api/users/" + $id, $scope.user).then(function(response){
-    		window.location.reload();
+    		//window.location.reload();
     		$scope.verif = "OK";
     	});
     };

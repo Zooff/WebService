@@ -1,6 +1,8 @@
 module.exports = {
 
     secret: 'secrettoken',
-    database: 'mongodb://localhost/test'
-
+    database: {
+      dev : 'mongodb://localhost/test',
+      test : 'mongodb://localhost/testunit'
+    },
 };
